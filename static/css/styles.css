@@ -1,0 +1,137 @@
+/* This CSS file will need to be added to the styling of 
+your web pages for the styles to be rendered. */
+
+.jumbotron {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  height: 100vh;
+  color: white;
+  background-color: #111;
+}
+
+
+
+
+
+body {
+background-color: #111;
+color: white;
+}
+
+a {
+    color: #d9534f;
+}
+
+h1 {
+    text-align: center;
+}
+
+
+
+.space-above {
+    margin-top: 20px;
+    padding-top: 20px;
+}
+
+
+
+
+.custom-header {
+    height:400px;
+    background-image: url("../images/background50.png");
+    background-position : 50%;
+    background-size:cover;
+    margin-bottom: 100px;
+
+}
+
+
+.custom-header h1{
+    margin:0;
+    font-size: 50px;
+    font-weight: 700;
+    line-height: 400px;
+
+
+
+
+
+}
+
+
+.card-img {
+    height: 300px;
+    width: 100%
+}
+
+.card-img img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+
+}
+
+.custom-card {
+    width: 350px;
+    height: 520px;
+    background-color: white;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom:40px;
+    border: solid 1px;
+    border-color:#808080;
+
+}
+
+.card-body {
+    width: 80%;
+    height: 150px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    top: -33px
+}
+
+.gym-name {
+    color: #E74C3C;
+    font-size: 26px;
+    position: relative;
+    top: 40px
+}
+
+.gym-review {
+    color: black;
+    position: relative;
+    top: 0px;
+    left: 238px;
+
+}
+
+.gym-location {
+    color: black;
+    font-size: 20px
+}
+
+.gym-opening-time {
+    position: relative;
+    color: black;
+}
+
+
+.gym-price {
+    color: black;
+}
+
+.card-footer {
+    width: 80%;
+    height: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+    position: relative;
+    top: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

@@ -1,0 +1,55 @@
+{% extends 'bootstrap/base.html' %}
+
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{url_for('.static', filename='css/styles.css')}}">
+<link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+{% endblock %}
+
+{% block title %}Gyms{% endblock %}
+
+{% block content %}
+<div class="custom-header">
+    <h1>All gyms</h1>
+</div>
+
+<div class="container">
+  <div class="row">
+      {% for gym in gyms %}
+      <div class="col-lg-4 col-md-6">
+          <div class="custom-card">
+              <div class="card-img">
+                  {% if gym.image_file %}
+                  <img src="{{url_for('.static', filename='uploads/'+gym.image_file)}}">
+                  {% else %}
+                  <img src="{{url_for('.static', filename='images/noimg.jpg')}}">
+                  {% endif %}
+              </div>
+              <div class="card-body">
+                  <p class="gym-name">{{gym.name}}</p>
+                  <p class="gym-review">{{gym.review}} / 5</p>
+                  <p class="gym-location">{{gym.location}}</p>
+                  <p class="gym-opening-time">Opening time: {{gym.opening_time}} - {{gym.closing_time}}</p>
+                  {% if gym.monthly_sub_price %}
+                  <p class="gym-price">Price per month: {{gym.monthly_sub_price}}</p>
+                  {% endif %}
+
+
+              </div>
+              <div class="card-footer">
+                  {% if gym.website_url %}
+                  <p><a class="waves-effect waves-light btn btn-danger btn-lg gym-website" href="{{gym.website_url}}">Website</a></p>
+                  {% endif %}
+              </div>
+          </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<p><a href="{{ url_for('home') }}">Return to index page</a></p>
+<p><a href="{{ url_for('add') }}">Add a new gym</a></p>
+
+{% endblock %}

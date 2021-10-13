@@ -1,0 +1,23 @@
+{% extends 'bootstrap/base.html' %}
+
+{% block title %}Find a gym near you{% endblock %}
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{url_for('.static', filename='css/styles.css')}}">
+<link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+{% endblock %}
+
+
+{% block content %}
+<div class="jumbotron text-center">
+    <div class="container">
+          <h1 class="display-4">💪 Find a gym near you 🏋️</h1>
+          <p class="lead">Interested in fitness and wellness?</p>
+          <hr class="my-4">
+          <p>Checkout my website to find the gyms around you.</p>
+        <a class="btn btn-danger btn-lg" href="{{ url_for('gyms') }}" role="button">Find a gym</a>
+    </div>
+</div>
+
+{% endblock %}
