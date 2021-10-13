@@ -1,26 +1,11 @@
-/* This CSS file will need to be added to the styling of 
-your web pages for the styles to be rendered. */
-
-.jumbotron {
-  display: flex;
-  align-items: center;
-  margin: 0;
-  height: 100vh;
-  color: white;
-  background-color: #111;
-}
-
-
-
-
-
-body {
-background-color: #111;
-color: white;
-}
-
+/* HTML TAGS */
 a {
     color: #d9534f;
+}
+
+body {
+    background-color: #111;
+    color: white;
 }
 
 h1 {
@@ -29,37 +14,50 @@ h1 {
 
 
 
-.space-above {
-    margin-top: 20px;
-    padding-top: 20px;
+
+/* CLASSES */
+/* HOME */
+.jumbotron {
+  align-items: center;
+  background-color: #111;
+  display: flex;
+  height: 100vh;
+  margin: 0;
 }
 
-
-
-
+/* HEADER / FOOTER */
 .custom-header {
-    height:400px;
     background-image: url("../images/background50.png");
     background-position : 50%;
     background-size:cover;
     margin-bottom: 100px;
-
 }
 
-
 .custom-header h1{
-    margin:0;
     font-size: 50px;
     font-weight: 700;
     line-height: 400px;
+    margin:0;
+}
 
+.custom-footer {
+    margin:80px 0;
+    text-align: center;
+}
 
+.custom-footer p{
+    display: inline-block;
+    margin:0 30px;
+}
 
-
-
+.custom-footer a:hover {
+    color: #c9302c;
+    text-decoration: none;
 }
 
 
+
+/* CARD PARTS */
 .card-img {
     height: 300px;
     width: 100%
@@ -69,7 +67,6 @@ h1 {
     height: 100%;
     width: 100%;
     object-fit: cover;
-
 }
 
 .custom-card {
@@ -81,7 +78,7 @@ h1 {
     margin-bottom:40px;
     border: solid 1px;
     border-color:#808080;
-
+    color: black;
 }
 
 .card-body {
@@ -101,26 +98,17 @@ h1 {
 }
 
 .gym-review {
-    color: black;
     position: relative;
     top: 0px;
     left: 238px;
-
 }
 
 .gym-location {
-    color: black;
     font-size: 20px
 }
 
 .gym-opening-time {
     position: relative;
-    color: black;
-}
-
-
-.gym-price {
-    color: black;
 }
 
 .card-footer {

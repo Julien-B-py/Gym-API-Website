@@ -1,6 +1,5 @@
 {% extends 'bootstrap/base.html' %}
 
-
 {% block styles %}
 {{super()}}
 <link rel="stylesheet" href="{{url_for('.static', filename='css/styles.css')}}">
@@ -16,21 +15,26 @@
 
 <div class="container">
   <div class="row">
+      <!-- Loop through all gyms -->
       {% for gym in gyms %}
       <div class="col-lg-4 col-md-6">
           <div class="custom-card">
               <div class="card-img">
+                  <!-- If gym entry has a saved image -->
                   {% if gym.image_file %}
                   <img src="{{url_for('.static', filename='uploads/'+gym.image_file)}}">
+                  <!-- If no saved image display default -->
                   {% else %}
                   <img src="{{url_for('.static', filename='images/noimg.jpg')}}">
                   {% endif %}
               </div>
               <div class="card-body">
+                  <!-- Display all saved data for every single gym -->
                   <p class="gym-name">{{gym.name}}</p>
                   <p class="gym-review">{{gym.review}} / 5</p>
                   <p class="gym-location">{{gym.location}}</p>
                   <p class="gym-opening-time">Opening time: {{gym.opening_time}} - {{gym.closing_time}}</p>
+                  <!-- Display monthly price if this info is available -->
                   {% if gym.monthly_sub_price %}
                   <p class="gym-price">Price per month: {{gym.monthly_sub_price}}</p>
                   {% endif %}
@@ -38,6 +42,7 @@
 
               </div>
               <div class="card-footer">
+                  <!-- Display website button if the URL is available -->
                   {% if gym.website_url %}
                   <p><a class="waves-effect waves-light btn btn-danger btn-lg gym-website" href="{{gym.website_url}}">Website</a></p>
                   {% endif %}
@@ -49,7 +54,9 @@
   </div>
 </div>
 
-<p><a href="{{ url_for('home') }}">Return to index page</a></p>
-<p><a href="{{ url_for('add') }}">Add a new gym</a></p>
+<div class="custom-footer">
+    <p><a href="{{ url_for('home') }}">Return to index page</a></p>
+    <p><a href="{{ url_for('add') }}">Add a new gym</a></p>
+</div>
 
 {% endblock %}

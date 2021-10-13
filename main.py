@@ -9,9 +9,10 @@ from wtforms import StringField, FileField, SubmitField
 from wtforms.validators import DataRequired
 from werkzeug.utils import secure_filename, redirect
 
-
+# Constants
 API_KEY = os.environ.get('API_KEY')
 SECRET_KEY = os.environ.get('SECRET_KEY')
+# Specify the path where the app will store the uploaded files
 UPLOAD_FOLDER = r'static\uploads'
 
 # Create a Flask instance
@@ -23,18 +24,18 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///gyms.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # Disable json alphabetical sorting
 app.config['JSON_SORT_KEYS'] = False
-#
+# Setup secret key to keep the client-side sessions secure.
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
-
-
+# Specify the path where the app will store the uploaded files
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
+# SQLAlchemy integration
 db = SQLAlchemy(app)
-
+# Bootstrap integration
 bootstrap = Bootstrap(app)
 
 
-# Define table name and every column
+# Define table name and every column name and type
 class Gym(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(250), nullable=False)
@@ -46,6 +47,7 @@ class Gym(db.Model):
     website_url = db.Column(db.String(500), nullable=True)
     image_file = db.Column(db.String(500), nullable=True)
 
+    # Return a dict containing every column name as the key and every data as the value
     def to_dict(self):
         return {column.name: getattr(self, column.name) for column in self.__table__.columns}
 
@@ -56,7 +58,7 @@ class Gym(db.Model):
 
 
 class AddGymForm(FlaskForm):
-    """A WTForm for configuring gym information"""
+    """A WTForm for configuring required gym information"""
     gym_name = StringField('Name', validators=[DataRequired()])
     gym_location = StringField('Location', validators=[DataRequired()])
     monthly_sub_price = StringField('Monthly subscription price')
@@ -77,20 +79,20 @@ def home():
 # Add
 @app.route("/add", methods=["GET", "POST"])
 def add():
+    # Create a WTForm
     form = AddGymForm()
 
+    # Check if it is a POST request and if it is valid
     if form.validate_on_submit():
 
         image_file = form.image_file.data
+        # Always use that function to secure a filename (Flask doc)
         filename = secure_filename(image_file.filename)
-
+        # If a file has been uploaded, store it in the upload folder
         if filename:
             image_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
-        # Null
-        if not filename:
-            filename = None
-
+        # Create a new record to add all the collected information sent from the WTForm to the database
         new_gym = Gym(
             name=form.gym_name.data,
             location=form.gym_location.data,
@@ -103,14 +105,18 @@ def add():
         )
         db.session.add(new_gym)
         db.session.commit()
+        # Redirect to all gyms page to show the result
         return redirect(url_for("gyms"))
 
+    # If regular access to the page, display add.html and pass in the WTForm
     return render_template("add.html", form=form)
 
 
 @app.route('/gyms')
 def gyms():
+    # Retrieve all records from Gym table
     gyms = db.session.query(Gym).all()
+    # Send it to the template
     return render_template('gyms.html', gyms=gyms)
 
 
@@ -168,12 +174,15 @@ def post_new_gym():
 # Handle PATCH requests (partial modification)
 @app.route("/api/gym/update-price/<int:gym_id>", methods=["PATCH"])
 def patch_new_price(gym_id):
-    new_price = request.args.get("new_price")
+    new_price = request.form.get("new_price")
+    # Look for the record with his id
     gym = db.session.query(Gym).get(gym_id)
+    # Check if it has been found or not
     if not gym:
         return jsonify(error={"Not Found": "Sorry no gym with that id was found in the database."}), 404
 
-    gym.coffee_price = new_price
+    # If found update the price
+    gym.monthly_sub_price = new_price
     db.session.commit()
     return jsonify(response={"success": "Successfully updated the monthly subscription price."}), 200
 
@@ -183,7 +192,8 @@ def patch_new_price(gym_id):
 @app.route("/api/gym/delete/<int:gym_id>", methods=["DELETE"])
 def delete_gym(gym_id):
     # Get the api-key value passed by the user in the request
-    api_key = request.args.get("api-key")
+    api_key = request.form.get("api-key")
+
     # If not authorized API key:
     if api_key != API_KEY:
         return jsonify(error={"Forbidden": "Access denied. Make sure you are using the correct api_key."}), 403

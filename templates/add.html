@@ -19,11 +19,17 @@
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 mx-auto">
       <!-- WTForm goes here -->
        {{ wtf.quick_form(form) }}
-
-	  <p class="space-above"><a href="{{ url_for('gyms') }}">See all gyms</a></p>
-
     </div>
   </div>
 </div>
 
+<div class="custom-footer">
+    <p><a href="{{ url_for('home') }}">Return to index page</a></p>
+    <p><a href="{{ url_for('gyms') }}">See all gyms</a></p>
+</div>
+
 {% endblock %}
+
+
+
+
